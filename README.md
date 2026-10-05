@@ -12,9 +12,15 @@ Original Blender artwork is integrated. Requires Chrome or Edge with WebGPU and 
 
 [Game release v0.0.3](https://github.com/SamuelAsherRivello/babylon-lite-super-offroad-clone/releases/tag/v0.0.3). The public page, all eight runtime GLBs, solo/local races, two-browser online results, replay and landscape touch controls passed verification. The displayed version matches the release.
 
-## Preview
+## Images
 
 ![Dust Circuit Rally gameplay](project-name/documentation/gameplay.png)
+
+## Table of Contents
+
+1. [Getting Started](#getting-started)
+2. [Project Details](#project-details)
+3. [Credits](#credits)
 
 This is the running WebGPU game with the exported Blender course and trucks. The generated art target in art-direction/target-v1/ is a design reference. Genuine Blender renders and editable sources are in project-name/artwork/.
 
