@@ -1,6 +1,8 @@
 ![Samuel Asher Rivello](project-name/documentation/samuel-asher-rivello-banner.png)
 
-# Dust Circuit Rally
+# Off the Road
+
+[![Off the Road logo above red, turquoise, yellow and violet trucks racing through a copper quarry](docs/images/game-logo.png)](docs/game-branding.md)
 
 An original four-truck browser arcade racer with a fixed 16:9 landscape camera, solo practice, shared-screen racing, and online racing on the released shared server.
 
@@ -8,13 +10,13 @@ Original Blender artwork is integrated. Requires Chrome or Edge with WebGPU and 
 
 ## Live Demo
 
-[**Play Dust Circuit Rally**](https://samuelasherrivello.github.io/babylon-lite-super-offroad-clone/) — solo practice, local 2–4 players, or online racing with up to four humans.
+[**Play Off the Road**](https://samuelasherrivello.github.io/babylon-lite-off-the-road-multiplayer/) — solo practice, local 2–4 players, or online racing with up to four humans.
 
-[Game release v0.0.3](https://github.com/SamuelAsherRivello/babylon-lite-super-offroad-clone/releases/tag/v0.0.3). The public page, all eight runtime GLBs, solo/local races, two-browser online results, replay and landscape touch controls passed verification. The displayed version matches the release.
+[Game release v0.0.3](https://github.com/SamuelAsherRivello/babylon-lite-off-the-road-multiplayer/releases/tag/v0.0.3). The public page, all eight runtime GLBs, solo/local races, two-browser online results, replay and landscape touch controls passed verification. The displayed version matches the release.
 
 ## Images
 
-![Dust Circuit Rally gameplay](project-name/documentation/gameplay.png)
+![Off the Road gameplay](project-name/documentation/gameplay.png)
 
 ## Table of Contents
 
@@ -84,7 +86,7 @@ The shared backend was released and live-verified as [v0.6.0](https://github.com
 
 Public verification on 2026-09-30 ran against the server's newer v0.7.0 deployment with the pinned v0.6.0 client. Solo/local races averaged 49.90/54.05 FPS; two simultaneous online browsers averaged 22.81 FPS. Online test drivers reached synchronized results with two laps each and were correctly ranked DNF behind the AI finishers. No page errors or failed requests occurred. All 27 current backend regressions passed. Physical mobile hardware and physical gamepads remain untested; touch and controller checks use emulation. See [public race evidence](project-name/documentation/public-browser-verification.json), [input/network evidence](project-name/documentation/input-network-verification.json) and [actionable error checks](project-name/documentation/error-verification.json).
 
-Game release uses the checked-in Release workflow: install, tests, reviewed-asset check, build, patch version bump, commit, tag, GitHub release. Pages uses the deploy-pages workflow on main or explicit dispatch. After release, dispatch Pages if the bot version commit did not trigger it. [Release run](https://github.com/SamuelAsherRivello/babylon-lite-super-offroad-clone/actions/runs/36721392105) and [v0.0.3 deployment](https://github.com/SamuelAsherRivello/babylon-lite-super-offroad-clone/actions/runs/36721641521) succeeded. Public asset/version evidence is recorded in project-name/documentation/public-assets-verification.json.
+Game release uses the checked-in Release workflow: install, tests, reviewed-asset check, build, patch version bump, commit, tag, GitHub release. Pages uses the deploy-pages workflow on main or explicit dispatch. After release, dispatch Pages if the bot version commit did not trigger it. [Release run](https://github.com/SamuelAsherRivello/babylon-lite-off-the-road-multiplayer/actions/runs/36721392105) and [v0.0.3 deployment](https://github.com/SamuelAsherRivello/babylon-lite-off-the-road-multiplayer/actions/runs/36721641521) succeeded. Public asset/version evidence is recorded in project-name/documentation/public-assets-verification.json.
 
 ## Source Revisions
 
