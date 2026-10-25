@@ -4,10 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run typecheck:config && vite build && node --experimental-strip-types scripts/check-deployment-assets.ts",
     "preview": "vite preview",
     "test": "node --test project-name/test/*.test.mjs",
-    "test:browser": "node project-name/test/browser.mjs"
+    "test:browser": "node project-name/test/browser.mjs",
+    "typecheck:config": "tsc -p tsconfig.config.json"
   },
   "dependencies": {
     "@babylonjs/lite": "1.32.0",
@@ -16,6 +17,8 @@
   "devDependencies": {
     "vite": "^8.3.0",
     "@playwright/test": "1.63.0",
-    "agent-browser": "0.38.1"
+    "agent-browser": "0.38.1",
+    "typescript": "5.9.3",
+    "@types/node": "24.19.2"
   }
 }
