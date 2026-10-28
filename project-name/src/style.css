@@ -103,7 +103,7 @@ a:hover {
 }
 .top-left h1 {
   font-family: Impact, "Arial Narrow", sans-serif;
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 400;
   letter-spacing: 0.045em;
   margin: 5px 0;
@@ -133,49 +133,66 @@ a:hover {
   padding: 9px 13px;
 }
 #game {
-  width: min(1220px, calc((100dvh - 258px) * 16 / 9));
-  max-width: calc(100vw - 64px);
+  width: min(1680px, calc(100vw - 64px));
   min-width: 300px;
   margin: 0 auto;
   padding-top: 98px;
 }
-.course-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
+.race-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
 }
-.course-header h2 {
-  font-family: Impact, "Arial Narrow", sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  margin: 5px 0 0;
+.course-column {
+  min-width: 0;
+}
+#race-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  align-self: stretch;
+  padding: 14px;
+  border: 1px solid #394842;
+  border-radius: 8px;
+  background: #202a27d9;
 }
 .race-metrics {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
   font: 700 13px/1.1 monospace;
   color: #cbd2c4;
+}
+#lap {
+  border: 1px solid #48554c;
+  border-radius: 3px;
+  padding: 8px 10px;
+  text-align: center;
 }
 #clock {
   font-size: 22px;
   color: var(--sand);
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 #connection {
+  grid-column: 1 / -1;
   font-size: 10px;
   letter-spacing: 0.1em;
   border: 1px solid #48554c;
   padding: 8px 11px;
   border-radius: 3px;
+  text-align: center;
 }
 #connection[data-status="connected"] {
   color: #abe19a;
 }
 #viewport {
   position: relative;
+  width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
   border: 1px solid #62604b;
@@ -208,18 +225,6 @@ a:hover {
   font: 800 10px/1 monospace;
   white-space: nowrap;
   box-shadow: 0 2px 4px #0005;
-}
-#race-call {
-  position: absolute;
-  top: 40%;
-  width: 100%;
-  text-align: center;
-  color: #fff4ce;
-  font:
-    100px/1 Impact,
-    sans-serif;
-  pointer-events: none;
-  text-shadow: 0 6px #543d28;
 }
 #graybox {
   position: absolute;
@@ -279,12 +284,12 @@ a:hover {
   margin-top: 10px;
 }
 #race-panel {
-  padding-top: 18px;
+  min-width: 0;
 }
 #roster {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 8px;
   min-height: 58px;
 }
 .idle-note {
@@ -341,50 +346,39 @@ a:hover {
 .race-actions {
   display: flex;
   gap: 8px;
-  justify-content: center;
+  justify-content: stretch;
   flex-wrap: wrap;
   margin-top: 12px;
 }
 .race-actions button {
+  flex: 1 1 42%;
   padding: 9px 14px;
   font-size: 11px;
 }
 #notice {
-  text-align: center;
+  text-align: left;
   font-size: 11px;
   line-height: 1.5;
   color: #b5c2af;
-  margin: 11px 0;
+  margin: 0;
   min-height: 17px;
 }
-.track-notes {
+.race-settings {
   display: flex;
-  justify-content: center;
-  gap: 28px;
-  color: #7f9284;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  margin: 15px 0 12px;
-}
-.track-notes span:before {
-  content: "◇";
-  color: #b99558;
-  margin-right: 7px;
-}
-.bottom-left {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin: 20px 0 15px 32px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #394842;
 }
-.bottom-left button {
+.race-settings button {
   padding: 8px 11px;
   font-size: 10px;
   background: transparent;
   border-color: #3e4a40;
 }
-.bottom-left label {
+.race-settings label {
   font-size: 8px;
   color: #9bae9e;
   display: flex;
@@ -392,24 +386,12 @@ a:hover {
   gap: 8px;
   margin: 0 6px;
 }
-.bottom-left input {
+.race-settings input {
   width: 70px;
   accent-color: var(--sand);
 }
-.bottom-right {
-  position: absolute;
-  bottom: 21px;
-  right: 32px;
-  display: flex;
-  gap: 14px;
-  align-items: center;
-}
-.bottom-right span {
-  font-size: 8px;
-  color: #728777;
-  letter-spacing: 0.1em;
-}
-.bottom-right b {
+.app-version {
+  margin-left: auto;
   font: 10px monospace;
   color: #d5bd86;
 }
@@ -499,15 +481,7 @@ dialog p {
 /* Reserve space for the grid, actions, and the template settings corner. */
 @media (min-width: 751px) {
   #game {
-    width: min(1220px, calc((100dvh - 370px) * 16 / 9));
-  }
-  .bottom-left {
-    position: fixed;
-    bottom: 0;
-    margin: 0 0 15px 32px;
-  }
-  .bottom-right {
-    position: fixed;
+    width: min(1680px, calc((100dvh - 180px) * 8 / 3), calc(100vw - 64px));
   }
 }
 @media (pointer: coarse) {
@@ -524,10 +498,10 @@ dialog p {
     font-size: 8px;
   }
   .top-left h1 {
-    font-size: 23px;
+    font-size: 15px;
   }
   .top-left h1 span {
-    display: none;
+    display: inline;
   }
   .top-right {
     right: 20px;
@@ -547,14 +521,16 @@ dialog p {
     min-width: 0;
     padding-top: 88px;
   }
-  .course-header h2 {
-    font-size: 21px;
+  .race-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
   }
-  .course-header .eyebrow {
-    font-size: 8px;
+  #race-hud {
+    padding: 12px;
   }
   .race-metrics {
-    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 7px;
   }
   #clock {
     font-size: 17px;
@@ -563,6 +539,7 @@ dialog p {
     font-size: 10px;
   }
   #connection {
+    grid-column: auto;
     font-size: 8px;
     padding: 6px;
   }
@@ -607,29 +584,8 @@ dialog p {
     font-size: 6px;
     margin-top: 4px;
   }
-  #race-call {
-    font-size: 64px;
-  }
-  .track-notes {
-    gap: 10px;
-    flex-wrap: wrap;
-    font-size: 6px;
-    margin-bottom: 8px;
-  }
-  .bottom-left {
-    margin: 18px 16px 50px;
+  .race-settings {
     gap: 6px;
-  }
-  .bottom-right {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    justify-content: center;
-    margin-top: -33px;
-    padding-bottom: 16px;
-  }
-  .bottom-right span {
-    font-size: 7px;
   }
   .world-label {
     font-size: 8px;
@@ -645,6 +601,17 @@ dialog p {
     height: 43px;
     padding: 7px;
     font-size: 9px;
+  }
+}
+@media (max-width: 400px) {
+  .top-right a {
+    display: none;
+  }
+  .top-left h1 {
+    font-size: 14px;
+  }
+  .top-right {
+    gap: 6px;
   }
 }
 @media (max-height: 600px) and (min-width: 751px) {
@@ -665,21 +632,15 @@ dialog p {
   }
   #game {
     padding-top: 46px;
-    width: calc((100dvh - 180px) * 16 / 9);
+    width: min(1680px, calc((100dvh - 180px) * 8 / 3), calc(100vw - 64px));
     min-width: 0;
   }
-  .course-header {
-    margin-bottom: 5px;
-  }
-  .course-header h2 {
-    font-size: 15px;
-    margin: 0;
-  }
-  .course-header .eyebrow {
-    display: none;
+  #race-hud {
+    padding: 8px;
+    gap: 7px;
   }
   .race-metrics {
-    gap: 8px;
+    gap: 5px;
   }
   #clock {
     font-size: 14px;
@@ -692,7 +653,7 @@ dialog p {
     padding: 4px;
   }
   #race-panel {
-    padding-top: 8px;
+    padding-top: 0;
   }
   #roster {
     gap: 4px;
@@ -724,21 +685,9 @@ dialog p {
     font-size: 9px;
   }
   #notice {
-    margin: 5px 0;
+    margin: 0;
     font-size: 9px;
     min-height: 14px;
-  }
-  .track-notes {
-    display: none;
-  }
-  .bottom-left {
-    margin-bottom: 7px;
-  }
-  .bottom-right {
-    bottom: 12px;
-  }
-  .bottom-right span {
-    display: none;
   }
   #overlay h2 {
     font-size: 28px;
@@ -762,9 +711,6 @@ dialog p {
   .idle-note {
     padding: 8px;
     font-size: 7px;
-  }
-  #race-call {
-    font-size: 60px;
   }
   .touch-controls {
     position: fixed;

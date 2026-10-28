@@ -15,18 +15,13 @@ import "./style.css";
 const base = import.meta.env.BASE_URL,
   graybox = new URLSearchParams(location.search).has("graybox");
 document.querySelector("#ui_layer").innerHTML = `
-<header class="corner top-left"><span class="eyebrow">RIVELLO · ARCADE RACING</span><h1>DUST <em>CIRCUIT</em> <span>RALLY</span></h1></header>
+<header class="corner top-left"><h1>OFF THE ROAD <em>DUST CIRCUIT</em></h1></header>
 <nav class="corner top-right"><a href="https://github.com/SamuelAsherRivello/babylon-lite-super-offroad-clone" target="_blank" rel="noreferrer">SOURCE ↗</a><button id="help">HOW TO PLAY</button></nav>
-<main id="game"><div class="course-header"><div><span class="eyebrow">QUARRY CIRCUIT / 01</span><h2>Copper Basin</h2></div><div class="race-metrics"><span id="lap">3 LAPS</span><span id="clock">00:00.0</span><span id="connection">PREPARING</span></div></div>
-<div id="viewport"><canvas id="canvas" aria-label="Copper Basin landscape racing circuit" tabindex="0"></canvas><div id="labels"></div><div id="race-call" aria-live="polite"></div><span id="graybox" ${graybox ? "" : "hidden"}>DEVELOPMENT GRAYBOX · BLENDER ASSETS PENDING</span>
-<div id="overlay"><span class="eyebrow" id="overlay-kicker">FOUR TRUCKS. ONE DIRT CIRCUIT.</span><h2 id="overlay-title">Make some dust.</h2><p id="overlay-text">Three laps. Tight turns. A little nitro.<br>Race your friends or challenge the quarry crew.</p><div id="mode-buttons"><button class="primary" id="online">Race online <span>1–4 PLAYERS ↗</span></button><button id="local">Local race <span>2–4 PLAYERS</span></button><button id="solo">Solo practice <span>YOU + 3 AI</span></button></div><button id="overlay-action" hidden></button></div></div>
-<div id="race-panel"><div id="roster"></div><div class="race-actions"><button id="join-keyboard" hidden>+ Keyboard P2</button><button id="join-pad" hidden>+ Gamepad</button><button id="ready" hidden>Ready up</button><button id="start" class="primary" hidden>Start race</button><button id="retry" hidden>Retry connection</button><button id="menu" hidden>Leave race</button></div></div>
-<div id="notice" role="status">Loading the circuit…</div>
-<div class="touch-controls"><div><button id="touch-left" aria-label="Steer left">◀</button><button id="touch-right" aria-label="Steer right">▶</button></div><div><button id="touch-recover" aria-label="Recover truck">↺</button><button id="touch-brake" aria-label="Brake and reverse">BRAKE</button><button id="touch-boost" aria-label="Nitro boost">NITRO</button><button id="touch-gas" aria-label="Accelerate">GAS</button></div></div>
-<div class="track-notes"><span>TABLETOP JUMP</span><span>WASHBOARD</span><span>MUD PATCH</span><span>RISK / REWARD SHORTCUT</span></div></main>
-<footer class="corner bottom-left"><button id="pause">Ⅱ Pause</button><button id="mute" aria-pressed="false">♫ Sound</button><label>VOLUME <input id="volume" type="range" min="0" max="1" step=".05" value=".25" aria-label="Sound volume"></label><button id="fullscreen">⛶</button></footer>
-<div class="corner bottom-right"><span>ORIGINAL OFF-ROAD ARCADE</span><b>v${versionText.trim().split("=")[1]}</b></div>
-<dialog id="instructions"><button id="close-help" aria-label="Close instructions">×</button><span class="eyebrow">WELCOME TO COPPER BASIN</span><h2>Find your line.</h2><p>Race three laps around the dirt circuit. Cross every checkpoint in order; the marked narrow shortcut is legal. Nitro cans refill boost. Green pickups improve traction for five seconds.</p><div class="control-guide"><b>KEYBOARD P1</b><span>W accelerate · A/D steer · S brake/reverse<br>Space nitro · R recover</span><b>KEYBOARD P2</b><span>↑ accelerate · ←/→ steer · ↓ brake/reverse<br>Enter nitro · Backspace recover</span><b>GAMEPAD</b><span>Left stick steer · RT or A accelerate<br>LT brake/reverse · B nitro · Y recover</span></div><p>Steering is relative to your truck. Recovery returns you to your last validated checkpoint and costs time. Stay on the dirt and watch the landings.</p><p>Online: ready up, then the lowest connected player number starts when everyone is ready. Late arrivals enter the next race. Reconnect creates a fresh player; interrupted sessions can reset.</p><p>Local: add keyboard P2 and gamepads before starting. Three/four local racers need gamepads. Pause stops a local race; online pause only stops your controls.</p></dialog>`;
+<main id="game"><div class="race-layout"><section class="course-column"><div id="viewport"><canvas id="canvas" aria-label="Off the Road Dust Circuit racing course" tabindex="0"></canvas><div id="labels"></div><span id="graybox" ${graybox ? "" : "hidden"}>DEVELOPMENT GRAYBOX · BLENDER ASSETS PENDING</span>
+<div id="overlay"><span class="eyebrow" id="overlay-kicker">FOUR TRUCKS. ONE DIRT CIRCUIT.</span><h2 id="overlay-title">Make some dust.</h2><p id="overlay-text">Three laps. Tight turns. A little nitro.<br>Race your friends or challenge AI drivers.</p><div id="mode-buttons"><button class="primary" id="online">Race online <span>1–4 PLAYERS ↗</span></button><button id="local">Local race <span>2–4 PLAYERS</span></button><button id="solo">Solo practice <span>YOU + 3 AI</span></button></div><button id="overlay-action" hidden></button></div></div>
+<div class="touch-controls"><div><button id="touch-left" aria-label="Steer left">◀</button><button id="touch-right" aria-label="Steer right">▶</button></div><div><button id="touch-recover" aria-label="Recover truck">↺</button><button id="touch-brake" aria-label="Brake and reverse">BRAKE</button><button id="touch-boost" aria-label="Nitro boost">NITRO</button><button id="touch-gas" aria-label="Accelerate">GAS</button></div></div></section>
+<aside id="race-hud"><div class="race-metrics"><span id="lap">3 LAPS</span><span id="clock">00:00.0</span><span id="connection">PREPARING</span></div><div id="race-panel"><div id="roster"></div><div class="race-actions"><button id="join-keyboard" hidden>+ Keyboard P2</button><button id="join-pad" hidden>+ Gamepad</button><button id="ready" hidden>Ready up</button><button id="start" class="primary" hidden>Start race</button><button id="retry" hidden>Retry connection</button><button id="menu" hidden>Leave race</button></div></div><div id="notice" role="status">Loading Dust Circuit…</div><div class="race-settings"><button id="pause">Ⅱ Pause</button><button id="mute" aria-pressed="false">♫ Sound</button><label>VOLUME <input id="volume" type="range" min="0" max="1" step=".05" value=".25" aria-label="Sound volume"></label><button id="fullscreen">⛶</button><b class="app-version">v${versionText.trim().split("=")[1]}</b></div></aside></div></main>
+<dialog id="instructions"><button id="close-help" aria-label="Close instructions">×</button><span class="eyebrow">WELCOME TO DUST CIRCUIT</span><h2>Find your line.</h2><p>Race three laps around the dirt circuit. Cross every checkpoint in order; the marked narrow shortcut is legal. Nitro cans refill boost. Green pickups improve traction for five seconds.</p><div class="control-guide"><b>KEYBOARD P1</b><span>W accelerate · A/D steer · S brake/reverse<br>Space nitro · R recover</span><b>KEYBOARD P2</b><span>↑ accelerate · ←/→ steer · ↓ brake/reverse<br>Enter nitro · Backspace recover</span><b>GAMEPAD</b><span>Left stick steer · RT or A accelerate<br>LT brake/reverse · B nitro · Y recover</span></div><p>Steering is relative to your truck. Recovery returns you to your last validated checkpoint and costs time. Stay on the dirt and watch the landings.</p><p>Online: ready up, then the lowest connected player number starts when everyone is ready. Late arrivals enter the next race. Reconnect creates a fresh player; interrupted sessions can reset.</p><p>Local: add keyboard P2 and gamepads before starting. Three/four local racers need gamepads. Pause stops a local race; online pause only stops your controls.</p></dialog>`;
 const $ = (id) => document.getElementById(id),
   input = new RacingInput(),
   sound = new RallySound();
@@ -277,13 +272,13 @@ function update() {
     return;
   }
   if (!loaded) {
-    overlay("Preparing Copper Basin", "Loading the original racing assets…");
+    overlay("Preparing Dust Circuit", "Loading the racing assets…");
     return;
   }
   if (!mode) {
     overlay(
       "Make some dust.",
-      "Three laps. Tight turns. A little nitro. Race your friends or challenge the quarry crew.",
+      "Three laps. Tight turns. A little nitro. Race your friends or challenge AI drivers.",
     );
     $("roster").innerHTML =
       '<span class="idle-note">ONE CIRCUIT · FOUR TRUCKS · NO SECOND CHANCES ON THE HAIRPIN</span>';
@@ -334,7 +329,7 @@ function update() {
         row = document.createElement("div");
       row.className = "racer-card";
       row.style.setProperty("--racer", COLORS[number - 1]);
-      const name = truck?.name || person?.name || "QUARRY AI",
+      const name = truck?.name || person?.name || "AI",
         position = truck ? state.ranking.indexOf(truck.id) + 1 : number;
       row.innerHTML = `<b class="racer-number">${number}</b><div><strong>${name}${(truck?.id || person?.id) === me ? " · YOU" : ""}</strong><small>${truck ? (truck.finish !== null ? "FINISHED" : `${position}${position === 1 ? "ST" : position === 2 ? "ND" : position === 3 ? "RD" : "TH"} · LAP ${Math.min(3, truck.laps + 1)}${truck.traction > 0 ? " · GRIP" : ""}`) : person ? (person.ready ? "READY ✓" : "WAITING") : "AI FILLS GRID"}</small><div class="nitro-bar"><i style="width:${((truck?.nitro || 0) / 5) * 100}%"></i></div></div>`;
       $("roster").append(row);
@@ -342,7 +337,11 @@ function update() {
   }
   if (state.event.serial !== noticeSerial) {
     noticeSerial = state.event.serial;
-    $("notice").textContent = state.event.text;
+    $("notice").textContent = /^(?:Engines ready\b.*|GO!)$/i.test(
+      state.event.text,
+    )
+      ? ""
+      : state.event.text;
   }
   $("ready").textContent = own?.ready ? "Unready" : "Ready up";
   $("ready").classList.toggle("selected", !!own?.ready);
@@ -360,7 +359,7 @@ function update() {
       mode === "local"
         ? "Add players, ready up, then start the race."
         : mode === "solo"
-          ? "Ready up to challenge three quarry AI trucks."
+          ? "Ready up to race three AI trucks."
           : "Ready up. The lowest player number starts when everyone is ready.",
     );
     $("start").hidden = leader?.id !== me;
@@ -382,12 +381,6 @@ function update() {
       $("notice").textContent =
         "You joined after the grid was formed. Watching this race; you enter the next grid.";
   }
-  $("race-call").textContent =
-    state.phase === "countdown"
-      ? String(Math.ceil(state.countdown))
-      : state.phase === "racing" && state.raceTime < 0.8
-        ? "GO!"
-        : "";
   if (lastPhase !== state.phase) {
     neutral();
     lastPhase = state.phase;

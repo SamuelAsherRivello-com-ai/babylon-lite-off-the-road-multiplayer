@@ -1,42 +1,42 @@
 {
-  "url": "http://127.0.0.1:5189/babylon-lite-super-offroad-clone/",
+  "url": "http://127.0.0.1:5189/babylon-lite-off-the-road-multiplayer/",
   "checks": [
     {
       "emulatedTouch": "concurrent gas/steer/boost, release, unchanged camera after resize",
       "layout": {
         "height": 390,
-        "scroll": 390,
+        "scroll": 441,
         "canvas": {
-          "x": 236.328125,
-          "y": 70,
-          "width": 371.328125,
-          "height": 207.984375,
-          "top": 70,
-          "right": 607.65625,
-          "bottom": 277.984375,
-          "left": 236.328125
+          "x": 143,
+          "y": 47,
+          "width": 358,
+          "height": 200.5,
+          "top": 47,
+          "right": 501,
+          "bottom": 247.5,
+          "left": 143
         }
       },
-      "fps": 60
+      "fps": 78.6774225656052
     },
     {
       "emulatedGamepads": "Two keyboard racers plus two independent virtual controllers fill the four-human local grid; simultaneous motion and disconnect input release verified",
       "motion": [
+        10.183576771025923,
         9.556217644529921,
-        9.556217644529921,
-        8.582450226392417,
-        8.582450226392412
+        6.3657951371850166,
+        4.7460037908239
       ]
     },
     {
       "network": "Client-side WebSocket shim delays input and onmessage by 150 ms each direction and drops every seventh outbound frame; continued authoritative motion and neutral focus release; closed transport and rejoined with fresh identity",
       "dropped": 6,
       "localCorrection": {
-        "impaired": 0.7093671065053423,
-        "settled": 0.004995372394476522
+        "impaired": 0.2817631920995231,
+        "settled": 0.027650587128112726
       }
     }
   ],
   "errors": [],
-  "time": "2026-09-30T15:22:01.836Z"
+  "time": "2026-10-28T04:39:22.082Z"
 }

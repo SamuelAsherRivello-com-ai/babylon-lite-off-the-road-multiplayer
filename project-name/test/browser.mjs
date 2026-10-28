@@ -44,8 +44,59 @@ async function open() {
   assert.equal(await page.evaluate(() => gameDiagnostics.graybox), false);
   if (process.env.EXPECTED_VERSION)
     assert.equal(
-      await page.locator(".bottom-right b").textContent(),
+      await page.locator(".app-version").textContent(),
       "v" + process.env.EXPECTED_VERSION,
+    );
+  assert.match(await page.locator("header h1").innerText(), /OFF THE ROAD/i);
+  assert.match(await page.locator("header h1").innerText(), /DUST CIRCUIT/i);
+  assert.equal(await page.locator("#race-call").count(), 0);
+  const layout = await page.evaluate(() => {
+    const course = document.querySelector("#viewport").getBoundingClientRect();
+    const hud = document.querySelector("#race-hud").getBoundingClientRect();
+    return {
+      courseRatio: course.width / (course.width + hud.width),
+      courseAspect: course.width / course.height,
+      courseLeft: course.left,
+      hudLeft: hud.left,
+    };
+  });
+  assert(layout.courseRatio > 0.62 && layout.courseRatio < 0.7);
+  assert(Math.abs(layout.courseAspect - 16 / 9) < 0.02);
+  assert(layout.courseLeft < layout.hudLeft);
+  for (const label of [
+    "Ravello Arcade Racing",
+    "Rivello · Arcade Racing",
+    "Quarry Circuit / 01",
+    "Copper Basin",
+    "Tabletop Jump",
+    "Washboard",
+    "Mud Patch",
+    "Risk / Reward",
+    "Original Off-Road Arcade",
+  ])
+    assert(
+      !new RegExp(label, "i").test(await page.locator("body").innerText()),
+    );
+  await page.click("#help");
+  const helpText = await page.locator("#instructions").innerText();
+  assert.match(helpText, /DUST CIRCUIT/i);
+  assert.doesNotMatch(
+    helpText,
+    /Copper Basin|Tabletop Jump|Washboard|Mud Patch|Risk\s*\/\s*Reward/i,
+  );
+  await page.click("#close-help");
+  for (const selector of [
+    "#lap",
+    "#clock",
+    "#connection",
+    "#pause",
+    "#mute",
+    "#volume",
+    ".app-version",
+  ])
+    assert(
+      await page.locator(selector).isVisible(),
+      `${selector} remains visible`,
     );
   return page;
 }
@@ -57,9 +108,27 @@ async function start(page, mode) {
   await page.waitForFunction(() => gameDiagnostics.state?.phase === "waiting");
   await page.click("#ready");
   await page.click("#start");
+  await page.waitForFunction(() => gameDiagnostics.state.phase === "countdown");
+  const countdownAt = Date.now();
+  assert.doesNotMatch(
+    await page.locator("#race-hud").innerText(),
+    /Engines ready|race starts in three|GO!/i,
+  );
   await page.waitForFunction(() => gameDiagnostics.state.phase === "racing", {
     timeout: 10000,
   });
+  assert(
+    Date.now() - countdownAt >= 2400,
+    "race countdown timing is preserved",
+  );
+  assert.doesNotMatch(
+    await page.locator("#race-hud").innerText(),
+    /Engines ready|race starts in three|GO!/i,
+  );
+  assert(
+    await page.locator("#menu").isVisible(),
+    "Leave race remains available",
+  );
 }
 const maps = [
   ["a", "d", "w", "Space"],
@@ -207,6 +276,19 @@ try {
   const p = await mobile.newPage();
   await p.goto(url);
   await p.waitForFunction(() => window.gameDiagnostics?.ready);
+  const mobileLayout = await p.evaluate(() => {
+    const course = document.querySelector("#viewport").getBoundingClientRect();
+    const hud = document.querySelector("#race-hud").getBoundingClientRect();
+    return {
+      courseAspect: course.width / course.height,
+      courseBottom: course.bottom,
+      hudTop: hud.top,
+      pageWidth: document.documentElement.scrollWidth,
+    };
+  });
+  assert(Math.abs(mobileLayout.courseAspect - 16 / 9) < 0.02);
+  assert(mobileLayout.hudTop >= mobileLayout.courseBottom);
+  assert(mobileLayout.pageWidth <= 390);
   await p.click("#solo");
   await p.click("#ready");
   await p.click("#start");
